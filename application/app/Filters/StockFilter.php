@@ -13,7 +13,7 @@ class StockFilter implements FilterInterface
     {
         return Stock::query()->whereBetween('date', [
             $request->dateFrom,
-            $request->dateTo ?? Carbon::tomorrow()->format('Y-m-d H:i:s'),
+            Carbon::tomorrow()->format('Y-m-d H:i:s'),
         ]);
     }
 }

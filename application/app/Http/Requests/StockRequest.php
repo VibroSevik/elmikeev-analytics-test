@@ -35,7 +35,6 @@ class StockRequest extends FormRequest
     {
         return [
             'dateFrom' => 'required|date_format:Y-m-d H:i:s,Y-m-d|after:yesterday|before:tomorrow',
-            'dateTo'   => 'date_format:Y-m-d H:i:s,Y-m-d|after:dateFrom',
             'limit'    => 'numeric|min:1|max:500',
         ];
     }
