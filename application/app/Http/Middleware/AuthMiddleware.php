@@ -5,7 +5,8 @@ namespace App\Http\Middleware;
 use Closure;
 use Illuminate\Http\Exceptions\HttpResponseException;
 use Illuminate\Http\Request;
-use Symfony\Component\HttpFoundation\Response;
+use Illuminate\Http\Response;
+use Symfony\Component\HttpFoundation\Response as SymfonyResponse;
 
 class AuthMiddleware
 {
@@ -13,21 +14,22 @@ class AuthMiddleware
      * Handle an incoming request.
      *
      * @param Request $request
-     * @param Closure(\Illuminate\Http\Request): (\Illuminate\Http\Response|\Illuminate\Http\RedirectResponse)  $next
-     * @return mixed
+     * @param Closure(Request): (SymfonyResponse) $next
+     * @return SymfonyResponse
+     * @throws HttpResponseException
      */
-    public function handle(Request $request, Closure $next) : mixed
+    public function handle(Request $request, Closure $next): SymfonyResponse
     {
-        if ($request->key == env('API_KEY')) {
-
-            return $next($request);
-        } else
+        if ($request->input('key') != env('APP_KEY')) {
             throw new HttpResponseException(
                 new Response(
-                    json_encode(['error' => 'Token invalid or empty']),
-                    403, [
-                    'Content-Type' => 'applications/json'
-                ])
+                    ['error' => 'Token invalid or empty'],
+                    Response::HTTP_UNAUTHORIZED,
+                    ['Content-Type' => 'applications/json']
+                )
             );
+        }
+
+        return $next($request);
     }
 }
