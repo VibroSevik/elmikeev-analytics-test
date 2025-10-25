@@ -27,7 +27,8 @@ class OrderRequest extends FormRequest
     public function rules()
     {
         return [
-            'dateFrom' => 'required|date_format:Y-m-d',
+            'dateFrom' => 'required|date_format:Y-m-d H:i:s,Y-m-d',
+            'dateTo'   => 'required|date_format:Y-m-d H:i:s,Y-m-d|after:dateFrom',
             'limit'    => 'numeric|min:1|max:500',
         ];
     }

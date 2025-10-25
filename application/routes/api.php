@@ -19,7 +19,6 @@ use Illuminate\Support\Facades\Route;
 */
 
 Route::middleware([AuthMiddleware::class])->group(function () {
-
     Route::get('sales', [SaleController::class, 'list']);
     Route::get('stocks', [StockController::class, 'list']);
     Route::get('orders', [OrderController::class, 'list']);

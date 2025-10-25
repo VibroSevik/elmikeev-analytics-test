@@ -11,7 +11,8 @@ class SaleController extends Controller
 {
     public function list(SaleRequest $request) : SalesCollection
     {
-        return new SalesCollection(SaleFilter::searchByRequest($request)
-            ->paginate($request->limit ?? 500));
+        return new SalesCollection(
+            SaleFilter::searchByRequest($request)
+                ->paginate($request->limit ?? 500));
     }
 }

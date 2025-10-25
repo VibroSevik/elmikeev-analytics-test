@@ -11,8 +11,9 @@ class OrderController extends Controller
 {
     public function list(OrderRequest $request) : OrdersCollection
     {
-        return new OrdersCollection(OrderFilter::searchByRequest($request)
-            ->paginate($request->limit ?? 500)
+        return new OrdersCollection(
+            OrderFilter::searchByRequest($request)
+                ->paginate($request->limit ?? 500)
         );
     }
 }
